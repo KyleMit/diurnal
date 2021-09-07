@@ -1,59 +1,66 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { FC } from "react"
-import { dateToISO, getAllDaysInMonth, getBlankStartDays, getMonthTitle, Weekdays } from "../utils/dates";
+import { FC } from 'react'
+import { Box, Stack, Theme, Typography } from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
+import { dateToISO, getAllDaysInMonth, getBlankStartDays, getMonthTitle, IMonth, Weekdays } from '../utils/dates';
 import { makeStyles } from '@mui/styles';
-import { CircleOutlined } from "@mui/icons-material";
+import { faMehBlank } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     calendar: {
         display: 'grid',
         gridTemplateColumns: 'repeat(7, 1fr)',
-        gridAutoRows: 50
+        rowGap: theme.spacing(2),
+        alignItems: 'center',
+        justifyItems: 'center'
     },
-    cell: {
-        textAlign: 'center'
+    dateCell: {
+        color: 'inherit',
+        textDecoration: 'none',
+        transition: '.4s ease background',
+        '&:hover': {
+            background: blueGrey[50]
+        }
     }
-});
+}));
 
-interface IMonthProps {
-    month: number;
-    year: number;
-}
 
-const Month: FC<IMonthProps> = ({month, year}) => {
+const Month: FC<IMonth> = ({month, year}) => {
     const classes = useStyles();
 
     const blankDays = getBlankStartDays(month, year);
     const monthDays = getAllDaysInMonth(month, year)
 
 
-
     return (
         <div>
-            <Typography textAlign="center" variant="h5" component="h2">
+            <Typography textAlign='center' variant='h5' component='h2' marginBottom={1}>
                 {getMonthTitle(month, year)}
             </Typography>
             <Box className={classes.calendar}>
                 {Weekdays.map(weekday => (
-                    <Box className={classes.cell} key={weekday}>
-                        {weekday}
-                    </Box>
-            ))}
-            </Box>
-            <Box className={classes.calendar}>
+                        <Box key={weekday}>
+                            {weekday}
+                        </Box>
+                ))}
                 {blankDays.map(el => (
-                    <Box className={classes.cell} key={el}></Box>
+                    <Box key={el}></Box>
                 ))}
                 {monthDays.map(day => (
-                    <Stack
+                    <Link
+                        to={`/day${dateToISO(day)}`}
                         key={dateToISO(day)}
-                        justifyContent="center"
-                        alignItems="center"
-                        className={classes.cell}
+                        className={classes.dateCell}
                     >
-                        {day.getDate()}
-                        <CircleOutlined/>
-                    </Stack>
+                        <Stack
+                            justifyContent='center'
+                            alignItems='center'
+                        >
+                            <span>{day.getDate()}</span>
+                            <FontAwesomeIcon icon={faMehBlank} size='2x' color='grey' />
+                        </Stack>
+                    </Link>
                 ))}
             </Box>
         </div>

@@ -1,6 +1,15 @@
 export const Weekdays = ['Sun', 'Mon','Tue','Wed','Thu','Fri','Sat'];
 
 
+export interface IMonth {
+    month: number;
+    year: number;
+}
+
+export interface IDay extends IMonth {
+    day: number;
+}
+
 export const getMonthStartDate = (month: number, year: number): Date => new Date(year, month, 1);
 export const getMonthStartDay = (month: number, year: number): number => getMonthStartDate(month, year).getDay();
 export const getBlankStartDays = (month: number, year: number): Array<number> => Array.from({length: getMonthStartDay(month, year)}, (_, i) => i)
