@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import { theme } from "./app/theme";
@@ -9,6 +9,7 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <Switch>
             <Route path="/">

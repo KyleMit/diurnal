@@ -3,9 +3,10 @@ import { Box, Stack, Theme, Typography } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { dateToISO, getAllDaysInMonth, getBlankStartDays, getMonthTitle, IMonth, Weekdays } from '../utils/dates';
 import { makeStyles } from '@mui/styles';
-import { faMehBlank } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { grey } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     calendar: {
@@ -58,7 +59,7 @@ const Month: FC<IMonth> = ({month, year}) => {
                             alignItems='center'
                         >
                             <span>{day.getDate()}</span>
-                            <FontAwesomeIcon icon={faMehBlank} size='2x' color='grey' />
+                            <FontAwesomeIcon icon={faCircle} size='2x' color={grey[300]} />
                         </Stack>
                     </Link>
                 ))}
